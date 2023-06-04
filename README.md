@@ -1,7 +1,11 @@
 # interop-fe
 
-textfield
+textfield 
+
 user (required)
+
 email (optional)
+
 hp (optional)
+
 item  (required)
