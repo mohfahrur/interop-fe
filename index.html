@@ -3,10 +3,10 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script>
-
         async function fetchMovieData() {
             var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer xxxxx");
+            //README.md to get the bearer token
+            myHeaders.append("Authorization", "Bearer xxxxxxx");
             myHeaders.append("accept", "application/json");
             var requestOptions = {
                 method: 'GET',
@@ -16,9 +16,7 @@
             const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1`,
                 requestOptions);
             const dataArray = await response.json();
-            console.log(dataArray.results);
             var data = dataArray.results
-            // jQuery.each(dataArray.results, function(i, data) {
             for (i = 0; i < 3; i++) {
                 $("#movie-content ul").append(`
                 <li style="display: inline-block;">
@@ -26,16 +24,13 @@
                     <h4>`+ data[i].title + `</h4>
                     <img src="http://image.tmdb.org/t/p/w300`+ data[i].poster_path + `">
              `);
-
             }
-            // });
         }
         async function fetchAnimeData() {
             const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=1&limit=3`);
             const data = await response.json();
 
             for (i = 0; i < 3; i++) {
-                console.log('Anime Title:', data.data[i]);
                 $("#anime-content ul").append(`
                     <li style="display: inline-block;">
                         <div style="display: inline;">
@@ -45,6 +40,8 @@
                 `);
             }
         }
+
+
     </script>
     <script>
         fetchMovieData();
@@ -56,13 +53,61 @@
     <h3 id="movie-content">
         <img width="200px" height="200px"
             src="blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg">
-        <ul >
+        <ul>
         </ul>
     </h3>
     <h3 id="anime-content">
-        <ul >
+        <ul>
         </ul>
     </h3>
+    <form id="orderForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="hp">HP:</label>
+        <input type="text" id="hp" name="hp" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="item">Item:</label>
+        <input type="text" id="item" name="item" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
 </body>
+<script>
+    $(document).ready(function () {
+        $("#orderForm").on("submit", function (event) {
+            event.preventDefault();
+            var name = document.getElementById("name").value;
+            var hp = document.getElementById("hp").value;
+            var email = document.getElementById("email").value;
+            var item = document.getElementById("item").value;
+
+            var payload = {
+                name: name,
+                hp: hp,
+                email: email,
+                item: item
+            };
+            $.ajax({
+                url: "http://localhost:8000/v2/buy",
+                method: "POST",
+                dataType: 'json',
+                data: JSON.stringify(payload),
+                contentType: 'application/json;charset=UTF-8',
+            }).then(response => response.json())
+                .then(data => {
+                    console.log("Response from backend:", data);
+                    alert("Data submitted successfully!");
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("An error occurred while submitting the data.");
+                });
+        });
+    });
+</script>
 
 </html>
