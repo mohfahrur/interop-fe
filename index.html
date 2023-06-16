@@ -86,7 +86,7 @@
             var item = document.getElementById("item").value;
 
             var payload = {
-                name: name,
+                user: name,
                 hp: hp,
                 email: email,
                 item: item
@@ -97,15 +97,15 @@
                 dataType: 'json',
                 data: JSON.stringify(payload),
                 contentType: 'application/json;charset=UTF-8',
-            }).then(response => response.json())
-                .then(data => {
-                    console.log("Response from backend:", data);
+                success: function (data) {
+                    console.log("Response from backend:", data.message);
                     alert("Data submitted successfully!");
-                })
-                .catch(error => {
+                },
+                error: function(data){
                     console.error("Error:", error);
                     alert("An error occurred while submitting the data.");
-                });
+                } 
+            })  
         });
     });
 </script>
