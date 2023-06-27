@@ -1,16 +1,21 @@
 # interop-fe
 
-textfield 
+-textfield 
 
-user (required)
+-user (required)
 
-email (optional)
+-email (optional)
 
-hp (optional)
+-hp (optional)
 
-item  (required)
+-item  (required)
 
-api doc to list the movie
+
+## Credential API Read Access Token
+
+**1. Create an account on this link (API doc list Movie)**
 https://developer.themoviedb.org/reference/intro/getting-started
 
-https://docs.api.jikan.moe/ 
+**2. Fill the form based on your data about your API project**
+
+**3. Copy the API Read Access Token (xxxxxxx)**
